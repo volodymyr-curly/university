@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Marks</title>
+    <div th:replace="fragments::resources"/>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"/>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-6 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3> Edit mark</h3>
+        </div>
+        <div class="col-6 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <form th:method="POST"
+                  th:action="@{/marks/{id}(id=${mark.id})}"
+                  th:object="${mark}">
+
+                <div class="row">
+                    <div class="alert alert-danger text-center" th:if="${#fields.hasGlobalErrors()}"
+                         th:text="${#fields.errors('global')}" style="font-size: smaller">
+                    </div>
+
+                    <div class="mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Mark value:</label>
+                        <select th:field="*{value}" class="form-control"
+                                style="color: blue">
+                            <option value="" selected hidden th:text="${mark.value}"></option>
+                            <th:block th:each="mar:${T(ua.foxminded.university.domain.MarkValue).values()}">
+                                <option th:text="${mar}" th:value="${mar}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Subject:</label>
+                        <select th:field="*{student.id}" class="form-control"
+                                style="color: blue" required>
+                            <option value="" selected hidden
+                                    th:text="|${mark.student.lastName} ${mark.student.firstName} ${mark.student.groupName}|">
+                            </option>
+                            <th:block th:each="stud:${students}">
+                                <option th:text="|${stud.lastName}  ${stud.firstName}  ${stud.groupName}|"
+                                        th:value="${stud.id}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Subject:</label>
+                        <select th:field="*{subject.id}" class="form-control"
+                                style="color: blue" required>
+                            <option value="" selected hidden>
+                                <ul class="list-inline" style="color: blue">
+                                    <li class="list-inline-item"
+                                        th:text="${mark.subject.name}"></li>
+                                    <li class="list-inline-item"
+                                        th:text="${mark.subject.startDate}"></li>
+                                    <li class="list-inline-item"
+                                        th:text="${mark.subject.endDate}"></li>
+                                </ul>
+                            </option>
+                            <th:block th:each="sub:${subjects}">
+                                <option th:value="${sub.id}">
+                                    <ul class="list-inline" style="color: blue">
+                                        <li class="list-inline-item"
+                                            th:text="${sub.name}"></li>
+                                        <li class="list-inline-item"
+                                            th:text="${sub.startDate}"></li>
+                                        <li class="list-inline-item"
+                                            th:text="${sub.endDate}"></li>
+                                    </ul>
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-primary ">Update</button>
+                    <a th:href="@{/marks}">
+                        <button type="button" class="btn btn-outline-secondary">Back</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
+

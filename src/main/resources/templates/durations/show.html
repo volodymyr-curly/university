@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Durations</title>
+    <div th:replace="fragments::resources"/>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"/>
+</header>
+
+<main class="my-3">
+    <div class="container">
+
+        <div class="col-4 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3> Duration</h3>
+        </div>
+
+        <div class="col-4 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <div class="row">
+                <div class="mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Start time:</label>
+                    <input type="text" class="form-control "
+                           th:value="${duration.startTime}" style="color: blue; background: white">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">End time:</label>
+                    <input type="text" class="form-control "
+                           th:value="${duration.endTime}" style="color: blue; background: white">
+                </div>
+            </div>
+
+            <div class="accordion mt-2 mb-4" id="lectures">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="lecturesHeading">
+                        <button class="accordion-button collapsed " style="color: blue" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#lecturesCollapse" aria-expanded="false"
+                                aria-controls="lecturesCollapse">
+                            Lectures:
+                        </button>
+                    </h2>
+                    <div id="lecturesCollapse" class="accordion-collapse collapse"
+                         aria-labelledby="lecturesHeading" data-bs-parent="#lectures"
+                         style="color: blue">
+                        <div class="accordion-body" th:each="lecture : ${duration.lectures}">
+                            <ul class="list-inline" style="color: blue">
+                                <li class="list-inline-item" th:text="${lecture.subjectName}"></li>
+                                <li class="list-inline-item" th:text="${lecture.date}"></li>
+                                <li class="list-inline-item" th:text="${lecture.lectureRoomNumber}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <a th:href="@{/durations}">
+                    <button type="button" class="btn btn-outline-primary">Back</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>

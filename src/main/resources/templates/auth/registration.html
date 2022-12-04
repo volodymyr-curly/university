@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-6 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3>Registration</h3>
+        </div>
+        <div class="col-6 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+
+            <div class="text-center col-12 mt-2 mb-4" style="color:blue">
+                <h4>Are you an employee?</h4>
+
+                <div class="text-center">
+                    <a th:href="@{/employee/registration}">
+                        <button type="button" class="btn btn-outline-primary">
+                            Next
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center col-12 mt-2 mb-4" style="color:blue">
+                <h4>or</h4>
+            </div>
+
+            <div class="text-center col-12 mt-2 mb-4" style="color:blue">
+                <h4>Are you a student?</h4>
+
+                <div class="text-center">
+                    <a th:href="@{/student/registration}">
+                        <button type="button" class="btn btn-outline-primary">
+                            Next
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <a th:href="@{/auth/login}">
+                    <button type="button" class="btn btn-outline-secondary">Back</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
+

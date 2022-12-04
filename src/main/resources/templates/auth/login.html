@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign in</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-4 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3>Sign in/Registration</h3>
+        </div>
+        <div class="col-4 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <form name="f" method="POST" action="/process_login">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                <div class="mt-2 mb-4" style="color:blue">
+                    <label for="username" class="form-label">Login:</label>
+                    <input type="text" class="form-control" name="username" id="username"
+                           style="color: blue" required>
+                </div>
+
+                <div class="mt-2 mb-4" style="color:blue">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" name="password" id="password"
+                           style="color: blue" required>
+                </div>
+
+                <div class="alert alert-danger text-center" th:if="${param.error}" style="font-size: smaller">
+                    Invalid login or password, try again
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-primary ">Sign in</button>
+                    <a th:href="@{/auth/registration}">
+                        <button type="button" class="btn btn-outline-secondary">Registration</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
+

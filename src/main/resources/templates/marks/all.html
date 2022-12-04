@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Marks</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<main class="my-3">
+    <div class="container">
+
+        <div th:replace="fragments::tableTitle"></div>
+
+        <div class="col-12 shadow-lg p-3 mb-5 bg-body rounded-bottom">
+            <table class="table table-borderless table-hover">
+
+                <thead style="color:blue">
+                <tr class="text-center">
+                    <th scope="col" colspan="2"></th>
+                    <th scope="col" colspan="2">
+                        <form th:method="GET" th:action="@{/marks/subject/list/}" th:object="${subject}">
+                            <div class="input-group input-group-sm" style="color:blue">
+                                <select th:field="*{id}" class="form-select rounded-0"
+                                        style="color: blue; border-color:royalblue" required>
+                                    <option value="" selected hidden>Select subject...</option>
+                                    <th:block th:each="sub:${subjects}">
+                                        <option th:value="${sub.id}">
+                                            <ul class="list-inline" style="color: blue">
+                                                <li class="list-inline-item"
+                                                    th:text="${sub.name}"></li>
+                                                <li class="list-inline-item"
+                                                    th:text="${sub.startDate}"></li>
+                                                <li class="list-inline-item"
+                                                    th:text="${sub.endDate}"></li>
+                                            </ul>
+                                        </option>
+                                    </th:block>
+                                </select>
+                                <button class="btn btn-outline-primary rounded-0" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         fill="currentColor"
+                                         class="bi bi-funnel" viewBox="0 0 16 16">
+                                        <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </th>
+                    <th scope="col" colspan="2">
+                        <form th:method="GET" th:action="@{/marks/student/list}" th:object="${student}">
+                            <div class="input-group input-group-sm" style="color:blue">
+                                <select th:field="*{id}" class="form-select rounded-0"
+                                        style="color: blue; border-color:royalblue" required>
+                                    <option value="" selected hidden>Select student...</option>
+                                    <th:block th:each="stud:${students}">
+                                        <option th:text="|${stud.lastName}  ${stud.firstName}  ${stud.groupName}|"
+                                                th:value="${stud.id}">
+                                        </option>
+                                    </th:block>
+                                </select>
+                                <button class="btn btn-outline-primary rounded-0" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         fill="currentColor"
+                                         class="bi bi-funnel" viewBox="0 0 16 16">
+                                        <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+
+                    </th>
+                    <th scope="col" colspan="3"></th>
+                </tr>
+                <tr class="text-center">
+                    <th class="text-start" scope="col" style="width: 5%">#</th>
+                    <th scope="col" style="width: 5%">Mark</th>
+                    <th scope="col" style="width: 18%">Subject</th>
+                    <th scope="col" style="width: 12%">Date</th>
+                    <th scope="col" style="width: 18%">Last name</th>
+                    <th scope="col" style="width: 13%">First name</th>
+                    <th scope="col" style="width: 14%">Group</th>
+                    <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')" scope="col" style="width: 10%">Edit</th>
+                    <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')" scope="col" style="width: 10%">Delete</th>
+                </tr>
+                </thead>
+                <tbody style="color:blue">
+
+                <tr class="text-center" th:each="mark : ${marks}">
+                    <td class="text-start" th:text="${markStat.count}"></td>
+                    <td th:text="${mark.value}"></td>
+                    <td th:text="${mark.subjectName}"></td>
+                    <td th:text="${mark.subjectStartDate}"></td>
+                    <td th:text="${mark.studentLastName}"></td>
+                    <td th:text="${mark.studentFirstName}"></td>
+                    <td th:text="${mark.studentGroupName}"></td>
+                    <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')" class="text-start" >
+                        <div class="text-center">
+                            <a th:href="@{/marks/{id}/edit(id=${mark.getId()})}">
+                                <button type="button" class="btn btn-outline-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         width="16"
+                                         height="16"
+                                         fill="currentColor"
+                                         class="bi bi-pencil"
+                                         viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                    </svg>
+                                </button>
+                            </a>
+                        </div>
+                    </td>
+                    <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')" class="text-start">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                    th:attr="data-bs-target='#deleteModal'+${mark.getId()}">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="16"
+                                     height="16"
+                                     fill="currentColor"
+                                     class="bi bi-trash3"
+                                     viewBox="0 0 16 16">
+                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="modal fade" th:id="'deleteModal'+${mark.getId()}" tabindex="-1"
+                             aria-labelledby="deleteModalLabel"
+                             aria-hidden="true">
+                            <form th:method="GET"
+                                  th:action="@{/marks/{id}/delete(id=${mark.getId()})}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content border border-danger border-3">
+                                        <div class="modal-body">
+
+                                            <div class="my-5 fw-bold text-center" style="color: red">
+                                                <h5>Are you sure you want to delete this record???</h5>
+                                            </div>
+
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                        data-bs-dismiss="modal">
+                                                    Back
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

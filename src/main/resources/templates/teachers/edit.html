@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teachers</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-6 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3> Edit teacher</h3>
+        </div>
+        <div class="col-6 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <form th:method="POST"
+                  th:action="@{/teachers/{id}(id=${teacher.id})}"
+                  th:object="${teacher}">
+                <div class="row">
+                    <div class="mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Teacher:</label>
+                        <input type="text" class="form-control"
+                               th:value="|${teacher.employee.lastName} ${teacher.employee.firstName} ${teacher.employee.jobTitle.jobTitleValue} ${teacher.employee.departmentName}|"
+                               style="color: #7373ff; background: white" readonly>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Degree:</label>
+                        <select th:field="*{degree}" class="form-control"
+                                style="color: blue" >
+                            <option value="-1" selected hidden th:text="${teacher.degree.degreeValue}"></option>
+                            <th:block th:each="deg:${T(ua.foxminded.university.domain.Degree).values()}">
+                                <option th:text="${deg.degreeValue}" th:value="${deg}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-4" style="color:blue">
+                        <label class="form-label">Select subjects:</label>
+                        <select class="form-control" id="subjects" name="subjects" size="8" multiple="multiple"
+                                style="color: blue" >
+                            <option th:each="sub : ${subjects}"
+                                    th:selected="${teacher.subjects.contains(sub)}"
+                                    th:value="${sub.id}"
+                                    th:text="|${sub.name}  ${sub.startDate}  ${sub.endDate}|"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-primary ">Update</button>
+                    <a th:href="@{/teachers}">
+                        <button type="button" class="btn btn-outline-secondary">Back</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
+

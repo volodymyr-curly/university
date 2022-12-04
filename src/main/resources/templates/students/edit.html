@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-8 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3> Edit student</h3>
+        </div>
+        <div class="col-8 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <form th:method="POST"
+                  th:action="@{/students/{studentId}(studentId=${student.id})}"
+                  th:object="${student}">
+
+                <div class="text-center mt-3" style="color:blue">
+                    <h4>General information</h4>
+                </div>
+                <div class="alert alert-danger text-center" th:if="${#fields.hasGlobalErrors()}"
+                     th:text="${#fields.errors('global')}" style="font-size: smaller">
+                </div>
+
+                <div class="row">
+                    <div class="col-6 mt-2 mb-4" style="color:blue">
+                        <label for="username" class="form-label">E-mail(Login):</label>
+                        <input type="text" th:field="*{email}" class="form-control"
+                               th:placeholder="${student.email}" name="username"
+                               id="username" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('email')}"
+                             th:errors="*{email}" style="font-size: smaller">
+                        </div>
+                    </div>
+
+                    <div class="col-6 mt-2 mb-4" style="color:blue">
+                        <label for="password" class="form-label">New password:</label>
+                        <input type="password" th:field="*{password}" class="form-control" name="password"
+                               id="password" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('password')}"
+                             th:errors="*{password}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div sec:authorize="hasRole('ROLE_ADMIN')" class="row">
+                    <div class="col-12 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Role:</label>
+                        <select th:field="*{role}" class="form-control"
+                                style="color: blue" >
+                            <option value="" selected hidden th:text="${student.role.roleValue}"></option>
+                            <th:block th:each="rol:${T(ua.foxminded.university.domain.Role).values()}">
+                                <option th:text="${rol.roleValue}" th:value="${rol}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class=" col-6 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">First name:</label>
+                        <input type="text" th:field="*{lastName}" class="form-control"
+                               th:placeholder="${student.lastName}" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}"
+                             th:errors="*{lastName}" style="font-size: smaller">
+                        </div>
+                    </div>
+
+                    <div class="col-6 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Last name:</label>
+                        <input type="text" th:field="*{firstName}" class="form-control"
+                               th:placeholder="${student.firstName}" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}"
+                             th:errors="*{firstName}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Gender:</label>
+                        <select th:field="*{gender}" class="form-control"
+                                style="color: blue" >
+                            <option value="" selected hidden th:text="${student.gender.genderValue}"></option>
+                            <th:block th:each="gen:${T(ua.foxminded.university.domain.Gender).values()}">
+                                <option th:text="${gen.genderValue}" th:value="${gen}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+
+                    <div class="col-4 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Birth date:</label>
+                        <input type="date" th:field="*{birthDate}" class="form-control"
+                               th:placeholder="${student.birthDate}" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('birthDate')}"
+                             th:errors="*{birthDate}" style="font-size: smaller">
+                        </div>
+                    </div>
+
+                    <div class="col-4 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Phone number:</label>
+                        <input type="text" th:field="*{phoneNumber}" class="form-control"
+                               th:placeholder="${student.phoneNumber}" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}"
+                             th:errors="*{phoneNumber}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3" style="color:blue">
+                    <h4>Address</h4>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 mt-2 mb-4 " style="color:blue">
+                        <label class="form-label">Country:</label>
+                        <input type="text" th:field="*{address.country}" class="form-control"
+                               th:placeholder="${student.address.country}" style="color: blue">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('address.country')}"
+                             th:errors="*{address.country}" style="font-size: smaller">
+                        </div>
+                    </div>
+
+                    <div class="col-6 mt-2 mb-4 " style="color:blue">
+                        <label class="form-label">Region:</label>
+                        <input type="text" th:field="*{address.region}" class="form-control"
+                               th:placeholder="${student.address.region}" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('address.region')}"
+                             th:errors="*{address.region}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 mt-2 mb-4 " style="color:blue">
+                        <label class="form-label">City:</label>
+                        <input type="text" th:field="*{address.city}" class="form-control"
+                               th:placeholder="${student.address.city}" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('address.city')}"
+                             th:errors="*{address.city}" style="font-size: smaller">
+                        </div>
+                    </div>
+
+                    <div class="col-4 mt-2 mb-4 " style="color:blue">
+                        <label class="form-label">Street:</label>
+                        <input type="text" th:field="*{address.street}" class="form-control"
+                               th:placeholder="${student.address.street}" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('address.street')}"
+                             th:errors="*{address.street}" style="font-size: smaller">
+                        </div>
+                    </div>
+
+                    <div class="col-2 mt-2 mb-4 " style="color:blue">
+                        <label class="form-label">Apartment:</label>
+                        <input type="text" th:field="*{address.apartment}" class="form-control"
+                               th:placeholder="${student.address.apartment}" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('address.apartment')}"
+                             th:errors="*{address.apartment}" style="font-size: smaller">
+                        </div>
+                    </div>
+
+                    <div class="col-2 mt-2 mb-4 " style="color:blue">
+                        <label class="form-label">Postcode:</label>
+                        <input type="text" th:field="*{address.postcode}" class="form-control"
+                               th:placeholder="${student.address.postcode}" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('address.postcode')}"
+                             th:errors="*{address.postcode}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3" style="color:blue">
+                    <h4>University information</h4>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 mt-2 mb-4 " style="color:blue">
+                        <label class="form-label">Group:</label>
+                        <select id ="groupId" name="groupId" class="form-control"
+                                style="color: blue" >
+                            <option th:each="gr:${groups}"
+                                    th:value="${gr.id}"
+                                    th:text="${gr.name}"
+                                    th:selected="${gr.id}==*{groupId}"></option>
+                        </select>
+                    </div>
+
+                    <div class="col-4 mt-2 mb-4 " style="color:blue">
+                        <label class="form-label">Education form:</label>
+                        <select th:field="*{educationForm}" class="form-control"
+                                style="color: blue" >
+                            <option value="" selected hidden th:text="*{educationForm.educationFormValue}"></option>
+                            <th:block th:each="educ:${T(ua.foxminded.university.domain.Employment).values()}">
+                                <option th:text="${educ.educationFormValue}" th:value="${educ}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+
+                    <div class="col-4 mt-2 mb-4 " style="color:blue">
+                        <label class="form-label">Enrollment date:</label>
+                        <input type="date" th:field="*{enrollmentDate}" class="form-control"
+                               th:placeholder="${student.enrollmentDate}" style="color: blue" >
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('enrollmentDate')}"
+                             th:errors="*{enrollmentDate}" style="font-size: smaller">
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-primary ">Update</button>
+                    <a th:href="@{/students}">
+                        <button type="button" class="btn btn-outline-secondary">Back</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
+

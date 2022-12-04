@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups</title>
+    <div th:replace="fragments::resources"/>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"/>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-8 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3> Edit group</h3>
+        </div>
+        <div class="col-8 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <form th:method="POST"
+                  th:action="@{/groups/{id}(id=${group.id})}"
+                  th:object="${group}">
+
+                <div class="row">
+                    <div class="alert alert-danger text-center" th:if="${#fields.hasGlobalErrors()}"
+                         th:text="${#fields.errors('global')}" style="font-size: smaller">
+                    </div>
+
+                    <div class="col-6 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Group name:</label>
+                        <input type="text" th:field="*{name}" class="form-control"
+                               th:placeholder="${group.getName()}" style="color: blue">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}"
+                             th:errors="*{name}" style="font-size: smaller">
+                        </div>
+                    </div>
+
+                    <div class="col-6 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Department:</label>
+                        <select th:field="*{departmentId}" class="form-control"
+                                style="color: blue">
+                            <option value="" selected hidden th:text="*{departmentName}"></option>
+                            <th:block th:each="dep:${departments}">
+                                <option th:text="${dep.name}" th:value="${dep.id}"></option>
+                            </th:block>
+                        </select>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('departmentId')}"
+                             th:errors="*{departmentId}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4" style="color:blue">
+                    <label class="form-label">Select subjects:</label>
+                    <select class="form-control" id="subjects" name="subjects" size="5" multiple="multiple"
+                            style="color: blue">
+                        <option th:each="sub : ${subjects} "
+                                th:selected="${group.subjects.contains(sub)}"
+                                th:value="${sub.id}">
+                            <ul class="list-inline" style="color: blue">
+                                <li class="list-inline-item" th:text="${sub.name}"></li>
+                                <li class="list-inline-item" th:text="${sub.startDate}"></li>
+                                <li class="list-inline-item" th:text="${sub.endDate}"></li>
+                            </ul>
+                        </option>
+                    </select>
+                </div>
+
+                <div th:if="${group.lectures == null}" class="mb-4" style="color:blue">
+                    <label class="form-label">Select lectures:</label>
+                    <select th:field="*{lectures}" class="form-control" size="5"
+                            style="color:blue" multiple>
+                        <option value="0" selected disabled>Select subject (subjects):</option>
+                        <th:block th:each="lec:${lectures}">
+                            <option th:value="${lec.id}">
+                                <ul class="list-inline" style="color: blue">
+                                    <li class="list-inline-item" th:text="${lec.date}"></li>
+                                    <li class="list-inline-item" th:text="${lec.durationStartTime}"></li>
+                                    <li class="list-inline-item" th:text="${lec.subjectName}"></li>
+                                    <li class="list-inline-item" th:text="${lec.lectureRoomNumber}"></li>
+                                    <li class="list-inline-item" th:text="${lec.teacherEmployeeLastName}"></li>
+                                    <li class="list-inline-item" th:text="${lec.teacherEmployeeFirstName}"></li>
+                                </ul>
+                            </option>
+                        </th:block>
+                    </select>
+
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('lectures')}"
+                         th:errors="*{lectures}" style="font-size: smaller">
+                    </div>
+                </div>
+
+                <div th:unless="${group.lectures == null }" class="mb-4" style="color:blue">
+                    <label class="form-label">Select lectures:</label>
+                    <select class="form-control" id="lectures" name="lectures" size="5" multiple="multiple"
+                            style="color: blue">
+                        <option th:unless="${group.lectures=='null'}" th:each="lec : ${lectures}"
+                                th:selected="${group.lectures.contains(lec)}"
+                                th:value="${lec.id}">
+                            <ul class="list-inline" style="color: blue">
+                                <li class="list-inline-item" th:text="${lec.date}"></li>
+                                <li class="list-inline-item" th:text="${lec.durationStartTime}"></li>
+                                <li class="list-inline-item" th:text="${lec.subjectName}"></li>
+                                <li class="list-inline-item" th:text="${lec.lectureRoomNumber}"></li>
+                                <li class="list-inline-item" th:text="${lec.teacherEmployeeLastName}"></li>
+                                <li class="list-inline-item" th:text="${lec.teacherEmployeeFirstName}"></li>
+                            </ul>
+                        </option>
+                    </select>
+
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('lectures')}"
+                         th:errors="*{lectures}" style="font-size: smaller">
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-primary ">Update</button>
+                    <a th:href="@{/groups}">
+                        <button type="button" class="btn btn-outline-secondary">Back</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
+

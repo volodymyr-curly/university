@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lectures</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-8 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3> Edit lecture</h3>
+        </div>
+        <div class="col-8 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <form th:method="POST"
+                  th:action="@{/lectures/{id}(id=${lecture.id})}"
+                  th:object="${lecture}">
+
+                <div class="row">
+                    <div class="alert alert-danger text-center" th:if="${#fields.hasGlobalErrors()}"
+                         th:text="${#fields.errors('global')}" style="font-size: smaller">
+                    </div>
+
+                    <div class=" col-4 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Date:</label>
+                        <input type="date" th:field="*{date}" class="form-control"
+                               th:placeholder="${lecture.date}" style="color: blue">
+                    </div>
+
+                    <div class="col-8 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Duration:</label>
+                        <select class="form-control" th:field="*{duration.id}" style="color: blue">
+                            <option value="" selected hidden>
+                                <ul class="list-inline" style="color: blue">
+                                    <li class="list-inline-item" th:text="${lecture.duration.startTime}"></li>
+                                    <li class="list-inline-item" th:text="${lecture.duration.endTime}"></li>
+                                </ul>
+                            </option>
+                            <th:block th:each="dur:${durations}">
+                                <option th:value="${dur.id}">
+                                    <ul class="list-inline" style="color: blue">
+                                        <li class="list-inline-item" th:text="${dur.startTime}"></li>
+                                        <li class="list-inline-item" th:text="${dur.endTime}"></li>
+                                    </ul>
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Room:</label>
+                        <select class="form-control" th:field="*{room.id}" style="color: blue">
+                            <option value="" selected hidden>
+                                <ul class="list-inline" style="color: blue">
+                                    <li class="list-inline-item" th:text="${lecture.room.number}"></li>
+                                    <li class="list-inline-item" th:text="${lecture.room.capacity}"></li>
+                                </ul>
+                            </option>
+                            <th:block th:each="rom:${rooms}">
+                                <option th:value="${rom.id}">
+                                    <ul class="list-inline" style="color: blue">
+                                        <li class="list-inline-item" th:text="${rom.number}"></li>
+                                        <li class="list-inline-item" th:text="${rom.capacity}"></li>
+                                    </ul>
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+
+                    <div class="col-8 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Subject:</label>
+                        <select class="form-control" id="subject" name="subject" style="color: blue">
+                            <th:block th:each="sub:${subjects}">
+                                <option th:value="${sub.id}" th:selected="${lecture.subject==sub}">
+                                    <ul class="list-inline" style="color: blue">
+                                        <li class="list-inline-item" th:text="${sub.name}"></li>
+                                        <li class="list-inline-item" th:text="${sub.startDate}"></li>
+                                        <li class="list-inline-item" th:text="${sub.endDate}"></li>
+                                    </ul>
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-4" style="color:blue">
+                        <label class="form-label">Select group(groups):</label>
+                        <select class="form-control" id="groups" name="groups" size="5" multiple="multiple"
+                                style="color: blue">
+                            <option th:each="gr : ${groups}"
+                                    th:selected="${lecture.groups.contains(gr)}"
+                                    th:value="${gr.id}">
+                                <ul class="list-inline" style="color: blue">
+                                    <li class="list-inline-item" th:text="${gr.name}"></li>
+                                    <li class="list-inline-item" th:text="${gr.departmentName}"></li>
+                                </ul>
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4" style="color:blue">
+                        <label class="form-label">Teacher:</label>
+                        <select  class="form-control" id="teacher" name="teacher" style="color: blue">
+                            <th:block th:each="teach:${teachers}">
+                                <option th:value="${teach.id}" th:selected="${lecture.teacher==teach}">
+                                    <ul class="list-inline" style="color: blue">
+                                        <li class="list-inline-item" th:text="${teach.employeeLastName}"></li>
+                                        <li class="list-inline-item" th:text="${teach.employeeFirstName}"></li>
+                                        <li class="list-inline-item" th:text="${teach.employeeJobTitle.jobTitleValue}"></li>
+                                        <li class="list-inline-item" th:text="${teach.employeeDepartmentName}"></li>
+                                    </ul>
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-primary ">Update</button>
+                    <a th:href="@{/lectures}">
+                        <button type="button" class="btn btn-outline-secondary">Back</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
+

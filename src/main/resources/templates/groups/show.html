@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups</title>
+    <div th:replace="fragments::resources"/>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"/>
+</header>
+
+<main class="my-3">
+    <div class="container">
+
+        <div class="col-8 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3> Group</h3>
+        </div>
+
+        <div class="col-8 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <div class="row">
+                <div class="col-6 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Group name:</label>
+                    <input type="text" class="form-control "
+                           th:value="${group.name}" style="color: blue; background: white" readonly>
+                </div>
+
+                <div class="col-6 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Department:</label>
+                    <input type="text" class="form-control "
+                           th:value="${group.departmentName}" style="color: blue; background: white"
+                           readonly>
+                </div>
+            </div>
+
+            <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE','ROLE_TEACHER')"
+                 class="accordion mb-4" id="students">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="studentHeading">
+                        <button class="accordion-button collapsed " style="color: blue" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#studentCollapse" aria-expanded="false"
+                                aria-controls="studentCollapse">
+                            Students:
+                        </button>
+                    </h2>
+                    <div id="studentCollapse" class="accordion-collapse collapse"
+                         aria-labelledby="studentHeading" data-bs-parent="#students"
+                         style="color: blue">
+                        <div class="accordion-body" th:each="student : ${group.students}">
+                            <ul class="list-inline" style="color: blue">
+                                <li class="list-inline-item" th:text="${student.lastName}"></li>
+                                <li class="list-inline-item" th:text="${student.firstName}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion mb-4" id="subjects">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="subjectsHeading">
+                        <button class="accordion-button collapsed " style="color: blue" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#subjectsCollapse" aria-expanded="false"
+                                aria-controls="subjectsCollapse">
+                            Subjects:
+                        </button>
+                    </h2>
+                    <div id="subjectsCollapse" class="accordion-collapse collapse"
+                         aria-labelledby="subjectsHeading" data-bs-parent="#subjects"
+                         style="color: blue">
+                        <div class="accordion-body" th:each="subject : ${group.subjects}">
+                            <ul class="list-inline" style="color: blue">
+                                <li class="list-inline-item" th:text="${subject.name}"></li>
+                                <li class="list-inline-item" th:text="${subject.startDate}"></li>
+                                <li class="list-inline-item" th:text="${subject.endDate}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion mb-4" id="lectures">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="lecturesHeading">
+                        <button class="accordion-button collapsed " style="color: blue" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#lecturesCollapse" aria-expanded="false"
+                                aria-controls="lecturesCollapse">
+                            Lectures:
+                        </button>
+                    </h2>
+                    <div id="lecturesCollapse" class="accordion-collapse collapse"
+                         aria-labelledby="lecturesHeading" data-bs-parent="#lectures"
+                         style="color: blue">
+                        <div class="accordion-body" th:each="lecture : ${group.lectures}">
+                            <ul class="list-inline" style="color: blue">
+                                <li class="list-inline-item" th:text="${lecture.subjectName}"></li>
+                                <li class="list-inline-item" th:text="${lecture.date}"></li>
+                                <li class="list-inline-item" th:text="${lecture.durationStartTime}"></li>
+                                <li class="list-inline-item" th:text="${lecture.lectureRoomNumber}"></li>
+                                <li class="list-inline-item" th:text="${lecture.teacherEmployeeLastName}"></li>
+                                <li class="list-inline-item" th:text="${lecture.teacherEmployeeFirstName}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <a th:href="@{/groups}">
+                    <button type="button" class="btn btn-outline-primary">Back</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>

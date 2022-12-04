@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-8 text-bg-primary rounded-top ps-3 pt-2 mx-auto mt-5" style="height: 3rem">
+            <h3>Student</h3>
+        </div>
+        <div class="col-8 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto">
+            <div class="text-center mt-3" style="color:blue">
+                <h4>General information</h4>
+            </div>
+
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <div class="col-12 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">Role:</label>
+                    <input type="text" class="form-control "
+                           th:value="${student.role.roleValue}" style="color: blue; background: white" readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class=" col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ms-3">First name:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.lastName}" style="color: blue; background: white" readonly>
+                </div>
+
+                <div class="col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ms-3">Last name:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.firstName}" style="color: blue; background: white" readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ms-3">Gender:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.gender.genderValue}" style="color: blue; background: white" readonly>
+                </div>
+
+                <div class="col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ms-3">Birth date:</label>
+                    <input type="date" class="form-control ps-4"
+                           th:value="${student.birthDate}" style="color: blue; background: white" readonly/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ms-3">E-mail:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.email}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ms-3">Phone number:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.phoneNumber}" style="color: blue; background: white" readonly/>
+                </div>
+            </div>
+
+            <div class="text-center mt-3" style="color:blue">
+                <h4>Address</h4>
+            </div>
+
+            <div class="row">
+                <div class="col-6 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ms-3">Country:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.address.country}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-6 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ms-3">Region:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.address.region}" style="color: blue; background: white" readonly/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ms-3">City:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.address.city}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-4 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ms-3">Street:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.address.street}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-2 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ms-3">Apartment:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.address.apartment}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-2 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ms-3">Postcode:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.address.postcode}" style="color: blue; background: white" readonly/>
+                </div>
+            </div>
+
+            <div class="text-center mt-3" style="color:blue">
+                <h4>University information</h4>
+            </div>
+
+            <div class="row">
+                <div class="col-4 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ms-3">Group:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.groupName}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-4 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ms-3">Education form:</label>
+                    <input type="text" class="form-control ps-4"
+                           th:value="${student.educationForm.educationFormValue}" style="color: blue; background: white"
+                           readonly/>
+                </div>
+
+                <div class="col-4 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ms-3">Enrollment date:</label>
+                    <input type="date" class="form-control ps-4"
+                           th:value="${student.enrollmentDate}" style="color: blue; background: white" readonly/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="accordion mb-4" id="marks">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="marksHeading">
+                            <button class="accordion-button collapsed " style="color: blue" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#marksCollapse" aria-expanded="false"
+                                    aria-controls="marksCollapse">
+                                Marks:
+                            </button>
+                        </h2>
+                        <div id="marksCollapse" class="accordion-collapse collapse"
+                             aria-labelledby="marksHeading" data-bs-parent="#marks"
+                             style="color: blue">
+                            <div class="accordion-body" th:each="mark : ${student.marks}">
+                                <ul class="list-inline" style="color: blue">
+                                    <li class="list-inline-item" th:text="${mark.value}"></li>
+                                    <li class="list-inline-item" th:text="${mark.subjectName}"></li>
+                                    <li class="list-inline-item" th:text="${mark.subjectEndDate}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <a th:href="@{/students}">
+                    <button type="button" class="btn btn-outline-primary ">Back</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

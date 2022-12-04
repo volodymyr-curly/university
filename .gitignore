@@ -1,0 +1,12 @@
+/target/
+/.classpath
+/.project
+
+/bin/
+/.idea/
+/university.iml
+/logs/
+/src/main/webapp/index.jsp
+
+/out/
+

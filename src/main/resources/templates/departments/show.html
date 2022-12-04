@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Departments</title>
+    <div th:replace="fragments::resources"/>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"/>
+</header>
+
+<main class="my-3">
+    <div class="container">
+
+        <div class="col-6 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3> Department</h3>
+        </div>
+
+        <div class="col-6 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <div class="row">
+                <div class="mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Department name:</label>
+                    <input type="text" class="form-control "
+                           th:value="${department.name}" style="color: blue; background: white" readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Faculty:</label>
+                    <input type="text" class="form-control "
+                           th:value="${department.facultyName}" style="color: blue; background: white" readonly>
+                </div>
+            </div>
+
+            <div class="accordion mt-2 mb-4" id="groups">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupsHeading">
+                        <button class="accordion-button collapsed " style="color: blue" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#groupsCollapse" aria-expanded="false"
+                                aria-controls="groupsCollapse">
+                            Groups:
+                        </button>
+                    </h2>
+                    <div id="groupsCollapse" class="accordion-collapse collapse"
+                         aria-labelledby="groupsHeading" data-bs-parent="#groups"
+                         style="color: blue">
+                        <div class="accordion-body" th:each="group : ${department.groups}">
+                            <ul class="list-inline" style="color: blue">
+                                <li class="list-inline-item" th:text="${group.name}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE','ROLE_TEACHER')"
+                 class="accordion mt-2 mb-4" id="employees">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="employeeHeading">
+                        <button class="accordion-button collapsed " style="color: blue" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#employeeCollapse" aria-expanded="false"
+                                aria-controls="employeeCollapse">
+                            Employees:
+                        </button>
+                    </h2>
+                    <div id="employeeCollapse" class="accordion-collapse collapse"
+                         aria-labelledby="employeeHeading" data-bs-parent="#employees"
+                         style="color: blue">
+                        <div class="accordion-body" th:each="employee : ${department.employees}">
+                            <ul class="list-inline" style="color: blue">
+                                <li class="list-inline-item" th:text="${employee.lastName}"></li>
+                                <li class="list-inline-item" th:text="${employee.firstName}"></li>
+                                <li class="list-inline-item" th:text="${employee.jobTitle.jobTitleValue}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <a th:href="@{/departments}">
+                    <button type="button" class="btn btn-outline-primary">Back</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>

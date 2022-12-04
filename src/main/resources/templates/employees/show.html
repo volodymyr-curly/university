@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees</title>
+    <div th:replace="fragments::resources"/>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"/>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-8 text-bg-primary rounded-top ps-3 pt-2 mx-auto mt-5" style="height: 3rem">
+            <h3>Employee</h3>
+        </div>
+        <div class="col-8 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto">
+            <div class="text-center mt-3" style="color:blue">
+                <h4>General information</h4>
+            </div>
+
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <div class="col-12 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">Role:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.role.roleValue}" style="color: blue; background: white" readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class=" col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label">First name:</label>
+                    <input type="text" class="form-control"
+                           th:value="${employee.lastName}" style="color: blue; background: white" readonly>
+                </div>
+
+                <div class="col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">Last name:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.firstName}" style="color: blue; background: white" readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">Gender:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.gender.genderValue}" style="color: blue; background: white" readonly>
+                </div>
+
+                <div class="col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">Birth date:</label>
+                    <input type="date" class="form-control "
+                           th:value="${employee.birthDate}" style="color: blue; background: white" readonly/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">E-mail:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.email}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">Phone number:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.phoneNumber}" style="color: blue; background: white" readonly/>
+                </div>
+            </div>
+
+            <div class="text-center mt-3" style="color:blue">
+                <h4>Address</h4>
+            </div>
+
+            <div class="row">
+                <div class="col-6 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Country:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.address.country}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-6 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Region:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.address.region}" style="color: blue; background: white" readonly/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">City:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.address.city}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-4 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Street:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.address.street}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-2 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Apartment:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.address.apartment}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-2 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Postcode:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.address.postcode}" style="color: blue; background: white" readonly/>
+                </div>
+            </div>
+
+            <div class="text-center mt-3" style="color:blue">
+                <h4>University information</h4>
+            </div>
+
+            <div class="row">
+                <div class="col-6 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Department:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.departmentName}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-6 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Job title:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.jobTitle.jobTitleValue}" style="color: blue; background: white"
+                           readonly/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Education form:</label>
+                    <input type="text" class="form-control "
+                           th:value="${employee.employmentType.educationFormValue}" style="color: blue; background: white"
+                           readonly/>
+                </div>
+
+                <div class="col-6 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Enrollment date:</label>
+                    <input type="date" class="form-control "
+                           th:value="${employee.employmentDate}" style="color: blue; background: white" readonly/>
+                </div>
+            </div>
+           
+            <div class="text-end">
+                <a th:href="@{/employees}">
+                    <button type="button" class="btn btn-outline-primary">Back</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+
+</html>

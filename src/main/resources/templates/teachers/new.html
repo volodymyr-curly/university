@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teachers</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-6 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3> Edit teacher</h3>
+        </div>
+        <div class="col-6 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <form th:method="POST"
+                  th:action="@{/teachers}"
+                  th:object="${teacher}">
+                <div class="row">
+                    <div class="alert alert-danger text-center" th:if="${emptyEmployeeList}"
+                         th:text="${emptyEmployeeList}" style="font-size: smaller">
+                    </div>
+
+                    <div class="mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Teacher:</label>
+                        <select th:field="*{employee.id}" class="form-control"
+                                style="color:blue">
+                            <option value="" selected hidden>Select your option...</option>
+                            <th:block th:each="emp:${employees}">
+                                <option th:value="${emp.id}">
+                                    <ul class="list-inline" style="color: blue">
+                                        <li class="list-inline-item" th:text="${emp.lastName}">LastName</li>
+                                        <li class="list-inline-item" th:text="${emp.firstName}">FirstName()</li>
+                                        <li class="list-inline-item" th:text="${emp.departmentName}">
+                                            Department
+                                        </li>
+                                        <li class="list-inline-item" th:text="${emp.jobTitle.jobTitleValue}">
+                                            Position
+                                        </li>
+                                    </ul>
+                                </option>
+                            </th:block>
+                        </select>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('employee.id')}"
+                             th:errors="*{employee.id}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Degree:</label>
+                        <select th:field="*{degree}" class="form-control"
+                                style="color: blue">
+                            <option value="" selected hidden>Select your option...</option>
+                            <th:block th:each="deg:${T(ua.foxminded.university.domain.Degree).values()}">
+                                <option th:text="${deg.degreeValue}" th:value="${deg}"></option>
+                            </th:block>
+                        </select>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('degree')}"
+                             th:errors="*{degree}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-4" style="color:blue">
+                        <label class="form-label">Subjects:</label>
+                        <select th:field="*{subjects}" class="form-control"
+                                style="color:blue" multiple>
+                            <option value="0" selected disabled>Select subject (subjects):</option>
+                            <th:block th:each="sub:${subjects}">
+                                <option th:value="${sub.id}">
+                                    <ul class="list-inline" style="color: blue">
+                                        <li class="list-inline-item" th:text="${sub.name}"></li>
+                                        <li class="list-inline-item" th:text="${sub.startDate}"></li>
+                                        <li class="list-inline-item" th:text="${sub.endDate}"></li>
+                                    </ul>
+                                </option>
+                            </th:block>
+                        </select>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('subjects')}"
+                             th:errors="*{subjects}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-primary ">Save</button>
+                    <a th:href="@{/teachers}">
+                        <button type="button" class="btn btn-outline-secondary">Back</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
+

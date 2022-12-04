@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Durations</title>
+    <div th:replace="fragments::resources"/>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"/>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-4 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3>New duration</h3>
+        </div>
+        <div class="col-4 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <form th:method="POST"
+                  th:action="@{/durations}"
+                  th:object="${duration}">
+
+                <div class="row">
+                    <div class="alert alert-danger text-center" th:if="${#fields.hasGlobalErrors()}"
+                         th:text="${#fields.errors('global')}" style="font-size: smaller">
+                    </div>
+
+                    <div class="mt-2 mb-4" style="color:blue">
+                        <label class="col-form-label ">Start time:</label>
+                        <input type="time" th:field="*{startTime}" class="form-control">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('startTime')}"
+                             th:errors="*{startTime}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mt-2 mb-4" style="color:blue">
+                        <label class="form-label">End time:</label>
+                        <input type="time" th:field="*{endTime}" class="form-control">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('endTime')}"
+                             th:errors="*{endTime}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-primary ">Save</button>
+                    <a th:href="@{/durations}">
+                        <button type="button" class="btn btn-outline-secondary">Back</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
+

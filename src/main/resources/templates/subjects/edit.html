@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subjects</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-8 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3> Edit subject</h3>
+        </div>
+        <div class="col-8 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <form th:method="POST"
+                  th:action="@{/subjects/{id}(id=${subject.id})}"
+                  th:object="${subject}">
+                <div class="row">
+                    <div class="alert alert-danger text-center" th:if="${#fields.hasGlobalErrors()}"
+                         th:text="${#fields.errors('global')}" style="font-size: smaller">
+                    </div>
+
+                    <div class=" col-6 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Subject name:</label>
+                        <input type="text" th:field="*{name}" class="form-control"
+                               th:placeholder="${subject.name}" style="color: blue" >
+                    </div>
+
+                    <div class="col-3 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Start date:</label>
+                        <input type="date" th:field="*{startDate}" class="form-control"
+                               th:placeholder="${subject.startDate}" style="color: blue" >
+                    </div>
+
+                    <div class="col-3 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">End date:</label>
+                        <input type="date" th:field="*{endDate}" class="form-control"
+                               th:placeholder="${subject.endDate}" style="color: blue" >
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-4" style="color:blue">
+                        <label class="form-label">Select groups:</label>
+                        <select class="form-control" id="groups" name="groups" size="5" multiple="multiple"
+                                style="color: blue" >
+                            <option th:each="gr : ${groups}"
+                                    th:selected="${subject.groups.contains(gr)}"
+                                    th:value="${gr.id}"
+                                    th:text="${gr.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-4" style="color:blue">
+                        <label class="form-label">Select teachers:</label>
+                        <select class="form-control" id="teachers" name="teachers" size="5" multiple="multiple"
+                                style="color: blue" >
+
+                            <option th:each="teach : ${teachers}"
+                                    th:selected="${subject.teachers.contains(teach)}"
+                                    th:value="${teach.getId}">
+                                <ul class="list-inline" style="color: blue">
+                                    <li class="list-inline-item"
+                                        th:text="${teach.employeeLastName}"></li>
+                                    <li class="list-inline-item"
+                                        th:text="${teach.employeeFirstName}"></li>
+                                    <li class="list-inline-item"
+                                        th:text="${teach.employeeJobTitle.jobTitleValue}"></li>
+                                    <li class="list-inline-item"
+                                        th:text="${teach.employeeDepartmentName}"></li>
+                                </ul>
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-primary ">Update</button>
+                    <a th:href="@{/subjects}">
+                        <button type="button" class="btn btn-outline-secondary">Back</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
+

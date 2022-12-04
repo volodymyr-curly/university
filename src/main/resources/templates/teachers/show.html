@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teachers</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-8 text-bg-primary rounded-top ps-3 pt-2 mx-auto mt-5" style="height: 3rem">
+            <h3>Teacher</h3>
+        </div>
+        <div class="col-8 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto">
+            <div class="text-center mt-3" style="color:blue">
+                <h4>General information</h4>
+            </div>
+
+            <div class="row">
+                <div class=" col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label">First name:</label>
+                    <input type="text" class="form-control"
+                           th:value="${teacher.employee.lastName}" style="color: blue; background: white" readonly>
+                </div>
+
+                <div class="col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">Last name:</label>
+                    <input type="text" class="form-control "
+                           th:value="${teacher.employee.firstName}" style="color: blue; background: white" readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Gender:</label>
+                    <input type="text" class="form-control "
+                           th:value="${teacher.employee.gender.genderValue}" style="color: blue; background: white"
+                           readonly/>
+                </div>
+
+                <div class="col-4 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">E-mail:</label>
+                    <input type="text" class="form-control "
+                           th:value="${teacher.employee.email}" style="color: blue; background: white" readonly/>
+                </div>
+
+                <div class="col-4 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">Phone number:</label>
+                    <input type="text" class="form-control "
+                           th:value="${teacher.employee.phoneNumber}" style="color: blue; background: white" readonly/>
+                </div>
+            </div>
+
+            <div class="text-center mt-3" style="color:blue">
+                <h4>University information</h4>
+            </div>
+
+            <div class="row">
+                <div class="col-4 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Department:</label>
+                    <input type="text" class="form-control "
+                           th:value="${teacher.employee.departmentName}" style="color: blue; background: white"
+                           readonly/>
+                </div>
+
+                <div class="col-4 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Job title:</label>
+                    <input type="text" class="form-control "
+                           th:value="${teacher.employee.jobTitle.jobTitleValue}" style="color: blue; background: white"
+                           readonly/>
+                </div>
+
+                <div class="col-4 mt-2 mb-4 " style="color:blue">
+                    <label class="form-label ">Degree:</label>
+                    <input type="text" class="form-control "
+                           th:value="${teacher.degree.degreeValue}" style="color: blue; background: white"
+                           readonly/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="accordion mb-4" id="subjects">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="subjectsHeading">
+                            <button class="accordion-button collapsed " style="color: blue" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#subjectsCollapse" aria-expanded="false"
+                                    aria-controls="subjectsCollapse">
+                                Subjects:
+                            </button>
+                        </h2>
+                        <div id="subjectsCollapse" class="accordion-collapse collapse"
+                             aria-labelledby="subjectsHeading" data-bs-parent="#subjects"
+                             style="color: blue">
+                            <div class="accordion-body" th:each="subject : ${teacher.subjects}">
+                                <ul class="list-inline" style="color: blue">
+                                    <li class="list-inline-item" th:text="${subject.name}"></li>
+                                    <li class="list-inline-item" th:text="${subject.startDate}"></li>
+                                    <li class="list-inline-item" th:text="${subject.endDate}"></li>
+                                    <li class="list-inline-item"
+                                        th:each="group:${subject.groups}">
+                                        <ul class="list-inline" style="color: blue">
+                                            <li class="list-inline-item"
+                                                th:text="${group.name}"></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="accordion mb-4" id="lectures">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="lecturesHeading">
+                            <button class="accordion-button collapsed " style="color: blue" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#lecturesCollapse" aria-expanded="false"
+                                    aria-controls="lecturesCollapse">
+                                Lectures:
+                            </button>
+                        </h2>
+                        <div id="lecturesCollapse" class="accordion-collapse collapse"
+                             aria-labelledby="lecturesHeading" data-bs-parent="#lectures"
+                             style="color: blue">
+                            <div class="accordion-body" th:each="lecture : ${teacher.lectures}">
+                                <ul class="list-inline" style="color: blue">
+                                    <li class="list-inline-item" th:text="${lecture.date}"></li>
+                                    <li class="list-inline-item" th:text="${lecture.durationStartTime}"></li>
+                                    <li class="list-inline-item" th:text="${lecture.subjectName}"></li>
+                                    <li class="list-inline-item" th:text="${lecture.lectureRoomNumber}"></li>
+                                    <li class="list-inline-item"
+                                        th:each="group:${lecture.groups}">
+                                        <ul class="list-inline" style="color: blue">
+                                            <li class="list-inline-item"
+                                                th:text="${group.name}"></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <a th:href="@{/teachers}">
+                    <button type="button" class="btn btn-outline-primary">Back</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+
+</html>

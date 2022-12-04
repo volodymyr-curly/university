@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subjects</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-8 text-bg-primary rounded-top ps-3 pt-2 mx-auto mt-5" style="height: 3rem">
+            <h3>Subject</h3>
+        </div>
+        <div class="col-8 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto">
+            <div class="row">
+                <div class=" col-6 mt-2 mb-4" style="color:blue">
+                    <label class="form-label">Subject name:</label>
+                    <input type="text" class="form-control"
+                           th:value="${subject.name}" style="color: blue; background: white" readonly>
+                </div>
+
+                <div class="col-3 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">Start date:</label>
+                    <input type="date" class="form-control "
+                           th:value="${subject.startDate}" style="color: blue; background: white" readonly>
+                </div>
+
+                <div class="col-3 mt-2 mb-4" style="color:blue">
+                    <label class="form-label ">End date:</label>
+                    <input type="date" class="form-control "
+                           th:value="${subject.endDate}" style="color: blue; background: white" readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="accordion mb-4" id="groups">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="groupsHeading">
+                            <button class="accordion-button collapsed " style="color: blue" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#groupsCollapse" aria-expanded="false"
+                                    aria-controls="groupsCollapse">
+                                Groups:
+                            </button>
+                        </h2>
+                        <div id="groupsCollapse" class="accordion-collapse collapse"
+                             aria-labelledby="groupsHeading" data-bs-parent="#groups"
+                             style="color: blue">
+                            <div class="accordion-body" th:each="group : ${subject.groups}">
+                                <p th:text="${group.name}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="accordion mb-4" id="teachers">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="teachersHeading">
+                            <button class="accordion-button collapsed " style="color: blue" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#teachersCollapse" aria-expanded="false"
+                                    aria-controls="teachersCollapse">
+                                Teachers:
+                            </button>
+                        </h2>
+                        <div id="teachersCollapse" class="accordion-collapse collapse"
+                             aria-labelledby="teachersHeading" data-bs-parent="#teachers"
+                             style="color: blue">
+                            <div class="accordion-body" th:each="teacher : ${subject.teachers}">
+                                <ul class="list-inline" style="color: blue">
+                                    <li class="list-inline-item" th:text="${teacher.employeeLastName}"></li>
+                                    <li class="list-inline-item" th:text="${teacher.employeeFirstName}"></li>
+                                    <li class="list-inline-item" th:text="${teacher.employeeJobTitle.jobTitleValue}"></li>
+                                    <li class="list-inline-item" th:text="${teacher.employeeDepartmentName}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="accordion mb-4" id="lectures">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="lecturesHeading">
+                            <button class="accordion-button collapsed " style="color: blue" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#lecturesCollapse" aria-expanded="false"
+                                    aria-controls="lecturesCollapse">
+                                Lectures:
+                            </button>
+                        </h2>
+                        <div id="lecturesCollapse" class="accordion-collapse collapse"
+                             aria-labelledby="lecturesHeading" data-bs-parent="#lectures"
+                             style="color: blue">
+                            <div class="accordion-body" th:each="lecture : ${subject.lectures}">
+                                <ul class="list-inline" style="color: blue">
+                                    <li class="list-inline-item" th:text="${lecture.date}"></li>
+                                    <li class="list-inline-item" th:text="${lecture.durationStartTime}"></li>
+                                    <li class="list-inline-item" th:text="${lecture.lectureRoomNumber}"></li>
+                                    <li class="list-inline-item"
+                                        th:each="group:${lecture.groups}">
+                                        <ul class="list-inline" style="color: blue">
+                                            <li class="list-inline-item"
+                                                th:text="${group.name}"></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <a th:href="@{/subjects}">
+                    <button type="button" class="btn btn-outline-primary ">Back</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+
+</html>

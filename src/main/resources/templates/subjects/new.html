@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subjects</title>
+    <div th:replace="fragments::resources"/>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"/>
+</header>
+
+<main class="my-3">
+    <div class="container">
+        <div class="col-8 text-bg-primary rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3>New subject</h3>
+        </div>
+        <div class="col-8 shadow-lg p-3 mb-5 bg-body rounded-bottom mx-auto py-2">
+            <form th:method="POST"
+                  th:action="@{/subjects}"
+                  th:object="${subject}">
+
+                <div class="row">
+                    <div class="alert alert-danger text-center" th:if="${#fields.hasGlobalErrors()}"
+                         th:text="${#fields.errors('global')}" style="font-size: smaller">
+                    </div>
+
+                    <div class="col-6 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Subject name:</label>
+                        <input type="text" th:field="*{name}" class="form-control">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}"
+                             th:errors="*{name}" style="font-size: smaller">
+                        </div>
+                    </div>
+
+                    <div class="col-3 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Start date:</label>
+                        <input type="date" th:field="*{startDate}" class="form-control">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('startDate')}"
+                             th:errors="*{startDate}" style="font-size: smaller">
+                        </div>
+                    </div>
+
+                    <div class="col-3 mt-2 mb-4" style="color:blue">
+                        <label class="form-label">End date:</label>
+                        <input type="date" th:field="*{endDate}" class="form-control">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('endDate')}"
+                             th:errors="*{endDate}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mt-2 mb-4" style="color:blue">
+                        <label class="form-label">Groups:</label>
+                        <select th:field="*{groups}" class="form-control"
+                                style="color:blue" multiple>
+                            <option value="0" selected disabled>Select group(groups):</option>
+                            <th:block th:each="grop:${groups}">
+                                <option th:text="${grop.name}"
+                                        th:value="${grop.id}">
+                                </option>
+                            </th:block>
+                        </select>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('groups')}"
+                             th:errors="*{groups}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mt-2 mb-4" style="color:blue">
+                        <label class="col-form-label">Teachers:</label>
+                        <select th:field="*{teachers}" class="form-control"
+                                style="color:blue" multiple >
+                            <option value="0" selected disabled>Select teacher(teachers):</option>
+                            <th:block th:each="thec:${teachers}">
+                                <option th:value="${thec.getId}">
+                                    <ul class="list-inline" style="color: blue">
+                                        <li class="list-inline-item"
+                                            th:text="${thec.employeeLastName}"></li>
+                                        <li class="list-inline-item"
+                                            th:text="${thec.employeeFirstName}"></li>
+                                        <li class="list-inline-item"
+                                            th:text="${thec.employeeJobTitle.jobTitleValue}"></li>
+                                        <li class="list-inline-item"
+                                            th:text="${thec.employeeDepartmentName}"></li>
+                                    </ul>
+                                </option>
+                            </th:block>
+                        </select>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('teachers')}"
+                             th:errors="*{teachers}" style="font-size: smaller">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-primary ">Save</button>
+                    <a th:href="@{/subjects}">
+                        <button type="button" class="btn btn-outline-secondary">Back</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
+

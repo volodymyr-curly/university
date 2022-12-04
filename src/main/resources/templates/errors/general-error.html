@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Server error</title>
+    <div th:replace="fragments::resources"></div>
+</head>
+
+<body>
+<header>
+    <div th:replace="fragments::navbar"></div>
+</header>
+
+<div class="container py-auto">
+
+    <div class="row mt-5">
+        <div class="col-6 text-bg-danger rounded-top ps-3 pt-2 mx-auto" style="height: 3rem">
+            <h3>University</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 shadow p-3 mb-5 bg-body rounded-bottom mx-auto py-2" style="color: red">
+            <div class="text-center">
+                <h5>Sorry, there was an error occurred on the server. </h5>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+</body>
+</html>
